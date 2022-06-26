@@ -85,8 +85,6 @@ class Tasques{
 
     // Constructor
     public function __construct(){
-        $this->token = "Bearer keyVBM9rXFpJNDEIU";
-        $this->base_id = "applVLtXI9jhnWeIB";
     }
 
     // Methods
