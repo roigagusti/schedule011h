@@ -1,8 +1,10 @@
 <?php
+include_once 'accesos.php';
+
 function findAirtable($table, $field, $value){
+    global $airtable_api_key;
     $url = "https://api.airtable.com/v0/applVLtXI9jhnWeIB/".$table."?filterByFormula={".$field."}='".$value."'";
-    $key = "Bearer keyVBM9rXFpJNDEIU";
-    $header = ['Authorization: '.$key];
+    $header = ['Authorization: Bearer '.$airtable_api_key];
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
@@ -15,8 +17,7 @@ function findAirtable($table, $field, $value){
 }
 function listAirtable($table){
     $url = "https://api.airtable.com/v0/applVLtXI9jhnWeIB/".$table;
-    $key = "Bearer keyVBM9rXFpJNDEIU";
-    $header = ['Authorization: '.$key];
+    $header = ['Authorization: Bearer '.$airtable_api_key];
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);

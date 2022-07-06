@@ -12,3 +12,87 @@ Content table
 1. Taula
 
 /* ----- 1. Taula ----- */
+.btn-011h{
+    background-color: #497767 !important;
+    border-color: #497767 !important;
+}
+.table-planificacio {
+    font-size:0.8em;
+    line-height:0.5rem;
+}
+.table-planificacio td, .table-planificacio th{
+    padding:0.5rem;
+    text-align:center;
+}
+.timeline{
+    overflow-x: scroll;
+    margin-left: 1070px;
+}
+
+.headcol{
+    position: absolute;
+    top: auto;
+}
+.text-left{
+    text-align:left !important;
+}
+.initiative{
+    left:0;
+    width: 200px;
+}
+.squad{
+    left:200px;
+    width: 150px;
+}
+.pec{
+    left:350px;
+    width: 60px;
+}
+.owner{
+    left:410px;
+    width: 60px;
+}
+.tarea{
+    left:470px;
+    width: 600px;
+}
+.endSprint{
+    border-right:1px solid #ddd !important;
+}
+.color-owner{
+    background-color: #C9E3CE;
+}
+.subhead th{
+    font-weight:300;
+}
+.inithead td{
+    padding-top: 10px;
+    padding-bottom:20px;
+}
+.bg-nt-gray{
+    background-color: #EBECED;
+}
+.bg-nt-brown{
+    background-color: #E9E5E3;
+}
+.bg-nt-orange{
+    background-color: #FAEBDD;
+}
+.bg-nt-yellow{
+    background-color: #FBF3DB;
+}
+.bg-nt-green{
+    background-color: #DDEDEA;
+}
+.bg-nt-blue{
+    background-color: #DDEBF1;
+}
+.bg-nt-purple{
+    background-color: #EAE4F2;
+}
+.bg-nt-pink{
+    background-color: #F4DFEB;
+}
+.bg-nt-red{
+    background-color: #FBE4E4;
+}
