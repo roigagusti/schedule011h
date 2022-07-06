@@ -5,13 +5,21 @@ ini_set('error_reporting', E_ALL);
 if(!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on"){
     header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], true, 301);
     exit;
-  }
+}
 
 // Incloure classes
 include_once 'classes.php';
+
+if(isset($_GET['quarter'])){
+    $q = $_GET['quarter'];
+}else{
+    $year = date('Y');
+    $quarter = ceil(date('m') / 3);
+    $q = $year.".Q".$quarter;
+}
 $tasques = new Tasques();
 $tasks = $tasques -> listTasks();
-$sprints = $tasques -> listSprints(2022);
+$sprints = $tasques -> listSprints($q);
 $hitos = $tasques -> listHitos();
 $habitants = $tasques -> listHabitants();
 ?>
@@ -92,18 +100,18 @@ $habitants = $tasques -> listHabitants();
                                                 <th class="headcol text-left owner">Owner</th>
                                                 <th class="headcol text-left tarea">Tarea</th>
 
-                                                <th>S1 - Q3</th>
-                                                <th class='endSprint'></th>
-                                                <th>S2 - Q3</th>
-                                                <th class='endSprint'></th>
-                                                <th>S3 - Q3</th>
-                                                <th class='endSprint'></th>
-                                                <th>S4 - Q3</th>
-                                                <th class='endSprint'></th>
-                                                <th>S5 - Q3</th>
-                                                <th class='endSprint'></th>
-                                                <th>S6 - Q3</th>
-                                                <th class='endSprint'></th>
+                                                <?php 
+                                                $i = 0;
+                                                foreach($sprints as $sprint) { 
+                                                    if($i%2 == 0){
+                                                        echo '<th>S'.$sprint->sprint.' - '.$sprint->quarter.'</th>';
+                                                    }else{
+                                                        echo '<th class="endSprint"></th>';
+                                                    }
+                                                    $i+=1;
+                                                }
+                                                $sprintweeks = $i;
+                                                ?>
                                             </tr>
                                             <tr class="subhead">
                                                 <th class="headcol text-left initiative">↓</th>
@@ -111,41 +119,42 @@ $habitants = $tasques -> listHabitants();
                                                 <th class="headcol text-left pec">↓</th>
                                                 <th class="headcol text-left owner">↓</th>
                                                 <th class="headcol text-left tarea">↓</th>
-                                                
-                                                <th class='endSprint'>2022-07-04</th>
-                                                <th class='endSprint'>2022-07-11</th>
-                                                <th class='endSprint'>2022-07-18</th>
-                                                <th class='endSprint'>2022-07-25</th>
-                                                <th class='endSprint'>2022-08-01</th>
-                                                <th class='endSprint'>2022-08-08</th>
-                                                <th class='endSprint'>2022-08-15</th>
-                                                <th class='endSprint'>2022-08-22</th>
-                                                <th class='endSprint'>2022-08-29</th>
-                                                <th class='endSprint'>2022-09-05</th>
-                                                <th class='endSprint'>2022-09-12</th>
-                                                <th class='endSprint'>2022-09-19</th>
+
+                                                <?php 
+                                                $i = 0;
+                                                foreach($sprints as $sprint) { 
+                                                    echo '<th class="endSprint">'.$sprint->date.'</th>';
+                                                    $i+=1;
+                                                }
+                                                ?>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($tasks as $task){
-                                                echo '<tr class="inithead">';
-                                                    echo '<td class="headcol text-left initiative">'.$task->initiative.'</td>';
-                                                    echo '<td class="headcol text-left squad">'.$task->squad.'</td>';
-                                                    echo '<td class="headcol text-left pec">'.$task->pec_id.'</td>';
-                                                    echo '<td class="headcol text-left owner">'.$task->owner.'</td>';
-                                                    echo '<td class="headcol text-left tarea">'.$task->tarea.'</td>';
-                                                    echo '<td class="endSprint"></td>';
+                                            <?php
+                                            $i=0;
+                                            foreach($tasks as $task){
+                                                // Generem capçal si es inici d'Iniciativa
+                                                /*if($task->iniciativa != $lastTitle){
+                                                    echo '<tr class="inithead">
+                                                        <td class="headcol text-left initiative"><strong>'.$task->iniciativa.'</strong></td>
+                                                        <td class="headcol text-left squad"></td>
+                                                        <td class="headcol text-left pec"></td>
+                                                        <td class="headcol text-left owner"></td>
+                                                        <td class="headcol text-left tarea"></td></tr>';
+
+                                                }*/
+                                                echo '<tr">
+                                                    <td class="headcol text-left initiative">'.$task->iniciativa.'</td>
+                                                    <td class="headcol text-left squad">'.$task->squad.'</td>
+                                                    <td class="headcol text-left pec">'.$task->pec_id.'</td>
+                                                    <td class="headcol text-left owner">'.$task->owner.'</td>
+                                                    <td class="headcol text-left tarea">'.$task->tarea.'</td>';
+                                                   
+                                                
+                                                foreach($sprints as $sprint){
                                                     echo '<td class="endSprint color-owner"></td>';
-                                                    echo '<td class="endSprint color-owner"></td>';
-                                                    echo '<td class="endSprint color-owner"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
-                                                    echo '<td class="endSprint"></td>';
+                                                }
+                                                $lastTitle = $task->iniciativa;
                                                 echo '</tr>';
                                             }
                                             ?>

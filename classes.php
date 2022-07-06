@@ -151,8 +151,8 @@ class Tasques{
         }
         return $records;
     }
-    public function listSprints($year){
-        $data = findAirtable("sprints","Year",strval($year));
+    public function listSprints($quarterOnYear){
+        $data = findAirtable("sprints","quarterOnYear",$quarterOnYear);
 
         $records = [];
         foreach($data['records'] as $record){
